@@ -1,0 +1,32 @@
+{
+  "basic_info": {
+    "rows": 35,
+    "columns": 18,
+    "memory_usage_mb": 0.0023622512817382812,
+    "shape": [
+      35,
+      18
+    ],
+    "column_names": [
+      "Unnamed: 0",
+      "Unnamed: 1",
+      "Unnamed: 2",
+      "Unnamed: 3",
+      "GUIDE DE COLLECTE ET SAISIE DES DONNEES",
+      "Unnamed: 5",
+      "Unnamed: 6",
+      "Unnamed: 7",
+      "Unnamed: 8",
+      "Unnamed: 9",
+      "Unnamed: 10",
+      "Unnamed: 11",
+      "agg_Unnamed: 0_mean",
+      "agg_Unnamed: 0_sum",
+      "agg_Unnamed: 1_mean",
+      "agg_Unnamed: 1_sum",
+      "agg_Unnamed: 2_mean",
+      "agg_Unnamed: 2_sum"
+    ]
+  },
+  "data_types": {
+    "dtype_counts": {

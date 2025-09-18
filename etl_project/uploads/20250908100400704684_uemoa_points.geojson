@@ -1,0 +1,181 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.3912,
+          6.3703
+        ]
+      },
+      "properties": {
+        "country": "Benin",
+        "iso3": "BEN",
+        "capital": "Cotonou",
+        "population": 12123198,
+        "gdp_usd": 14600000000,
+        "gdp_per_capita": 1206,
+        "fintech_accounts_per_100": 32.5,
+        "financial_inclusion_pct": 41.0,
+        "risk_score": 55,
+        "cluster": 2
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.5197,
+          12.3714
+        ]
+      },
+      "properties": {
+        "country": "Burkina Faso",
+        "iso3": "BFA",
+        "capital": "Ouagadougou",
+        "population": 20903273,
+        "gdp_usd": 17000000000,
+        "gdp_per_capita": 814,
+        "fintech_accounts_per_100": 15.2,
+        "financial_inclusion_pct": 36.5,
+        "risk_score": 70,
+        "cluster": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -4.0083,
+          5.3097
+        ]
+      },
+      "properties": {
+        "country": "Côte d'Ivoire",
+        "iso3": "CIV",
+        "capital": "Yamoussoukro",
+        "population": 27624578,
+        "gdp_usd": 70700000000,
+        "gdp_per_capita": 2556,
+        "fintech_accounts_per_100": 45.1,
+        "financial_inclusion_pct": 52.3,
+        "risk_score": 45,
+        "cluster": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.1804,
+          11.8817
+        ]
+      },
+      "properties": {
+        "country": "Guinea-Bissau",
+        "iso3": "GNB",
+        "capital": "Bissau",
+        "population": 1874300,
+        "gdp_usd": 1400000000,
+        "gdp_per_capita": 747,
+        "fintech_accounts_per_100": 8.5,
+        "financial_inclusion_pct": 28.4,
+        "risk_score": 80,
+        "cluster": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.0,
+          17.5707
+        ]
+      },
+      "properties": {
+        "country": "Mali",
+        "iso3": "MLI",
+        "capital": "Bamako",
+        "population": 20250833,
+        "gdp_usd": 18000000000,
+        "gdp_per_capita": 889,
+        "fintech_accounts_per_100": 12.0,
+        "financial_inclusion_pct": 33.7,
+        "risk_score": 75,
+        "cluster": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.1164,
+          13.5116
+        ]
+      },
+      "properties": {
+        "country": "Niger",
+        "iso3": "NER",
+        "capital": "Niamey",
+        "population": 24206644,
+        "gdp_usd": 13100000000,
+        "gdp_per_capita": 541,
+        "fintech_accounts_per_100": 9.8,
+        "financial_inclusion_pct": 29.5,
+        "risk_score": 78,
+        "cluster": 3
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -17.4739,
+          14.4974
+        ]
+      },
+      "properties": {
+        "country": "Senegal",
+        "iso3": "SEN",
+        "capital": "Dakar",
+        "population": 17966810,
+        "gdp_usd": 24100000000,
+        "gdp_per_capita": 1341,
+        "fintech_accounts_per_100": 38.2,
+        "financial_inclusion_pct": 49.0,
+        "risk_score": 50,
+        "cluster": 1
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.8232,
+          6.1319
+        ]
+      },
+      "properties": {
+        "country": "Togo",
+        "iso3": "TGO",
+        "capital": "Lomé",
+        "population": 8278737,
+        "gdp_usd": 7300000000,
+        "gdp_per_capita": 882,
+        "fintech_accounts_per_100": 22.4,
+        "financial_inclusion_pct": 37.8,
+        "risk_score": 60,
+        "cluster": 2
+      }
+    }
+  ]
+}

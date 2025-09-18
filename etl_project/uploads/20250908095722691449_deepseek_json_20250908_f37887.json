@@ -1,0 +1,133 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3522, 48.8566]
+      },
+      "properties": {
+        "name": "Paris",
+        "population": 2148000,
+        "temperature": 15.2,
+        "elevation": 35,
+        "category": "capital",
+        "density": 21000,
+        "visited": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.3517, 50.8503]
+      },
+      "properties": {
+        "name": "Bruxelles",
+        "population": 1218000,
+        "temperature": 11.0,
+        "elevation": 13,
+        "category": "capital",
+        "density": 7200,
+        "visited": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.4050, 52.5200]
+      },
+      "properties": {
+        "name": "Berlin",
+        "population": 3769000,
+        "temperature": 10.3,
+        "elevation": 34,
+        "category": "capital",
+        "density": 4100,
+        "visited": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [2.30, 48.85], [2.35, 48.85], [2.35, 48.90], [2.30, 48.90], [2.30, 48.85]
+        ]]
+      },
+      "properties": {
+        "name": "Zone Nord Paris",
+        "area_km2": 25,
+        "land_use": "urban",
+        "population_density": 18000,
+        "avg_income": 45000
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [2.3522, 48.8566],
+          [2.30, 48.85],
+          [2.25, 48.83]
+        ]
+      },
+      "properties": {
+        "name": "Axe historique",
+        "length_km": 8.5,
+        "type": "avenue",
+        "traffic_volume": 25000,
+        "speed_limit": 50
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.2945, 48.8584]
+      },
+      "properties": {
+        "name": "Tour Eiffel",
+        "height": 330,
+        "visitors_per_year": 7000000,
+        "built_year": 1889,
+        "type": "monument",
+        "entry_fee": 25.50
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3364, 48.8608]
+      },
+      "properties": {
+        "name": "Arc de Triomphe",
+        "height": 50,
+        "visitors_per_year": 1500000,
+        "built_year": 1836,
+        "type": "monument",
+        "entry_fee": 13.00
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [2.32, 48.86], [2.33, 48.86], [2.33, 48.87], [2.32, 48.87], [2.32, 48.86]
+        ]]
+      },
+      "properties": {
+        "name": "Quartier Champs-Élysées",
+        "area_km2": 1.2,
+        "land_use": "commercial",
+        "avg_rent": 1500,
+        "shops_count": 250
+      }
+    }
+  ]
+}

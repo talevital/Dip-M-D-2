@@ -1,0 +1,12 @@
+{
+  "basic_info_comparison": {
+    "rows_change": -10,
+    "columns_change": 14,
+    "memory_change_mb": 0.004366874694824219
+  },
+  "data_quality_comparison": {},
+  "changes_detected": [
+    "Nombre de lignes: -10",
+    "Nombre de colonnes: 14"
+  ]
+}

@@ -1,0 +1,11 @@
+id,nom,age,salaire,ville,pays
+1,Jean-Pierre Dupont,35,45000,Paris,France
+2,Marie-Claire Martin,,52000,Lyon,France
+3,Pierre Durand,42,,Marseille,France
+4,Sophie Bernard,28,38000,Toulouse,France
+5,Jean-Pierre Dupont,35,45000,Paris,France
+6,Lucas Moreau,31,75000,Nice,France
+7,Emma Petit,25,32000,Nantes,France
+8,Thomas Roux,,41000,Strasbourg,France
+9,Julie Leroy,29,36000,Bordeaux,France
+10,Antoine Simon,38,48000,Lille,France

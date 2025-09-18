@@ -1,0 +1,25 @@
+{
+  "basic_info": {
+    "rows": 8,
+    "columns": 11,
+    "memory_usage_mb": 0.000476837158203125,
+    "shape": [
+      8,
+      11
+    ],
+    "column_names": [
+      "Pays_Exportateur",
+      "Pays_Importateur",
+      "Produit",
+      "Valeur_USD",
+      "Ann\u00e9e",
+      "agg_Pays_Exportateur_mean",
+      "agg_Pays_Exportateur_sum",
+      "agg_Pays_Importateur_mean",
+      "agg_Pays_Importateur_sum",
+      "agg_Produit_mean",
+      "agg_Produit_sum"
+    ]
+  },
+  "data_types": {
+    "dtype_counts": {

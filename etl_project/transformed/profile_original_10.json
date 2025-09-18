@@ -1,0 +1,26 @@
+{
+  "basic_info": {
+    "rows": 52,
+    "columns": 12,
+    "memory_usage_mb": 0.02187633514404297,
+    "shape": [
+      52,
+      12
+    ],
+    "column_names": [
+      "Unnamed: 0",
+      "Unnamed: 1",
+      "Unnamed: 2",
+      "Unnamed: 3",
+      "GUIDE DE COLLECTE ET SAISIE DES DONNEES",
+      "Unnamed: 5",
+      "Unnamed: 6",
+      "Unnamed: 7",
+      "Unnamed: 8",
+      "Unnamed: 9",
+      "Unnamed: 10",
+      "Unnamed: 11"
+    ]
+  },
+  "data_types": {
+    "dtype_counts": {

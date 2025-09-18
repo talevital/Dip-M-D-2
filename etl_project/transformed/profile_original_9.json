@@ -1,0 +1,19 @@
+{
+  "basic_info": {
+    "rows": 8,
+    "columns": 5,
+    "memory_usage_mb": 0.0016756057739257812,
+    "shape": [
+      8,
+      5
+    ],
+    "column_names": [
+      "Pays_Exportateur",
+      "Pays_Importateur",
+      "Produit",
+      "Valeur_USD",
+      "Ann\u00e9e"
+    ]
+  },
+  "data_types": {
+    "dtype_counts": {

@@ -1,0 +1,36 @@
+{
+  "basic_info": {
+    "rows": 1000,
+    "columns": 22,
+    "memory_usage_mb": 0.12887191772460938,
+    "shape": [
+      1000,
+      22
+    ],
+    "column_names": [
+      "pays",
+      "annee",
+      "pib_millions",
+      "population_millions",
+      "inflation_taux",
+      "export_millions",
+      "import_millions",
+      "date_creation",
+      "date_creation_year",
+      "date_creation_month",
+      "date_creation_day",
+      "date_creation_dayofweek",
+      "pib_par_habitant",
+      "balance_commerciale",
+      "pays_riche",
+      "agg_pib_millions_mean",
+      "agg_pib_millions_sum",
+      "agg_pib_millions_count",
+      "agg_population_millions_mean",
+      "agg_population_millions_sum",
+      "date_creation_quarter",
+      "date_creation_is_weekend"
+    ]
+  },
+  "data_types": {
+    "dtype_counts": {
