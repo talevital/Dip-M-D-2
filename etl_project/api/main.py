@@ -1,6 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse, FileResponse
 from typing import List, Optional
 import pandas as pd
 import os
@@ -182,6 +182,26 @@ def create_app() -> FastAPI:
             )
             return PreviewResponse(metadata=md, rows=rows_json)
 
+    @app.get("/files/{file_id}")
+    def get_file(file_id: int):
+        """Récupère les détails d'un fichier spécifique"""
+        with get_session() as session:
+            uf = session.get(UploadedFile, file_id)
+            if not uf:
+                raise HTTPException(status_code=404, detail="File not found")
+            
+            return {
+                "id": uf.id,
+                "original_name": uf.original_name,
+                "stored_path": uf.stored_path,
+                "content_type": uf.content_type,
+                "size_bytes": uf.size_bytes,
+                "row_count": uf.row_count,
+                "col_count": uf.col_count,
+                "columns": uf.columns,
+                "created_at": uf.created_at.isoformat(),
+            }
+
     @app.get("/files")
     def list_files(limit: int = 50, offset: int = 0):
         with get_session() as session:
@@ -234,6 +254,206 @@ def create_app() -> FastAPI:
             session.commit()
             
             return {"message": "File deleted successfully"}
+
+    @app.post("/files/{file_id}/transform")
+    def transform_file(file_id: int, options: dict):
+        """Endpoint pour transformer un fichier avec le HybridDataProcessor"""
+        with get_session() as session:
+            uf = session.get(UploadedFile, file_id)
+            if not uf:
+                raise HTTPException(status_code=404, detail="File not found")
+            
+            if not os.path.exists(uf.stored_path):
+                raise HTTPException(status_code=404, detail="Original file not found")
+            
+            try:
+                # Importer le processeur hybride
+                from etl.transform.hybrid_processor import HybridDataProcessor
+                
+                # Lire le fichier
+                ftype = detect_type(uf.original_name, uf.content_type)
+                df_original = read_preview(uf.stored_path, ftype)
+                
+                # Initialiser le processeur hybride
+                processor = HybridDataProcessor()
+                
+                # Configuration basée sur les options
+                config = {
+                    'processing_mode': options.get('processing_mode', 'automatic'),
+                    'handle_missing': options.get('missing_strategy', 'mean') != 'none',
+                    'missing_strategy': options.get('missing_strategy', 'mean'),
+                    'missing_threshold': options.get('missing_threshold', 0.5),
+                    'group_by': options.get('group_by'),
+                    'detect_outliers': options.get('handle_outliers', False),
+                    'outlier_methods': [options.get('outlier_detection', 'iqr')],
+                    'outlier_method': options.get('outliers_method', 'winsorize'),
+                    'remove_duplicates': options.get('remove_duplicates', False),
+                    'fix_inconsistencies': options.get('fix_inconsistencies', False),
+                    'normalize_numerical': options.get('normalize_numerical', False),
+                    'normalization_method': options.get('numerical_method', 'standard'),
+                    'normalize_by_group': options.get('normalize_by_group', False),
+                    'group_normalization_method': options.get('group_normalization_method', 'minmax'),
+                    'encode_categorical': options.get('encode_categorical', False),
+                    'encoding_method': options.get('categorical_method', 'label'),
+                    'max_categories': options.get('max_categories', 50),
+                    'normalize_dates': options.get('normalize_dates', False),
+                    'extract_date_features': options.get('extract_date_features', False),
+                    'date_format': options.get('date_format', '%Y-%m-%d'),
+                    'apply_transformations': options.get('apply_transformations', False),
+                    'transformations': options.get('transformations', []),
+                    'transform_columns': options.get('transform_columns', [])
+                }
+                
+                # Traitement des données
+                df_processed = processor.process_data_hybrid(df_original, config)
+                
+                # Générer le rapport
+                report = processor.get_processing_report()
+                
+                # Sauvegarder le fichier transformé
+                output_dir = os.path.join(os.path.dirname(uf.stored_path), 'processed')
+                os.makedirs(output_dir, exist_ok=True)
+                
+                timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                output_filename = f"processed_{uf.id}_{timestamp}.csv"
+                output_path = os.path.join(output_dir, output_filename)
+                
+                df_processed.to_csv(output_path, index=False)
+                
+                # Retourner les résultats
+                return {
+                    'success': True,
+                    'original_shape': list(df_original.shape),
+                    'processed_shape': list(df_processed.shape),
+                    'processing_report': report,
+                    'outlier_stats': processor.outlier_stats,
+                    'output_path': output_path,
+                    'processed_at': datetime.now().isoformat(),
+                    'summary': {
+                        'rows_processed': int(len(df_processed)),
+                        'columns_processed': int(len(df_processed.columns)),
+                        'outliers_detected': int(sum(len(stats.get('iqr', {}).get('outliers', [])) for stats in processor.outlier_stats.values())),
+                        'processing_mode': config.get('processing_mode', 'automatic')
+                    }
+                }
+                
+            except Exception as e:
+                logger.error(f"Erreur lors de la transformation du fichier {file_id}: {e}")
+                raise HTTPException(status_code=500, detail=f"Erreur de transformation: {str(e)}")
+
+    @app.get("/files/{file_id}/export-hybrid")
+    def export_file_hybrid(file_id: int, format: str = "csv", options: dict = None):
+        """Export d'un fichier transformé avec le HybridDataProcessor"""
+        with get_session() as session:
+            uf = session.get(UploadedFile, file_id)
+            if not uf:
+                raise HTTPException(status_code=404, detail="File not found")
+            
+            if not os.path.exists(uf.stored_path):
+                raise HTTPException(status_code=404, detail="Original file not found")
+            
+            try:
+                # Importer le processeur hybride
+                from etl.transform.hybrid_processor import HybridDataProcessor
+                
+                # Lire le fichier
+                ftype = detect_type(uf.original_name, uf.content_type)
+                df_original = read_preview(uf.stored_path, ftype)
+                
+                # Initialiser le processeur hybride
+                processor = HybridDataProcessor()
+                
+                # Configuration par défaut ou depuis les options
+                config = options or {
+                    'processing_mode': 'automatic',
+                    'handle_missing': True,
+                    'missing_strategy': 'mean',
+                    'detect_outliers': True,
+                    'outlier_methods': ['iqr'],
+                    'outlier_method': 'winsorize',
+                    'remove_duplicates': True,
+                    'fix_inconsistencies': True,
+                    'normalize_numerical': True,
+                    'normalization_method': 'standard',
+                    'encode_categorical': True,
+                    'encoding_method': 'label',
+                    'normalize_dates': True,
+                    'extract_date_features': True
+                }
+                
+                # Traitement des données
+                df_processed = processor.process_data_hybrid(df_original, config)
+                
+                # Créer le répertoire d'export
+                export_dir = os.path.join(os.path.dirname(uf.stored_path), 'exports')
+                os.makedirs(export_dir, exist_ok=True)
+                
+                # Générer le nom de fichier
+                timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                base_name = os.path.splitext(uf.original_name)[0]
+                
+                if format.lower() == "csv":
+                    filename = f"{base_name}_processed_{timestamp}.csv"
+                    file_path = os.path.join(export_dir, filename)
+                    df_processed.to_csv(file_path, index=False)
+                    media_type = "text/csv"
+                    
+                elif format.lower() == "xlsx":
+                    filename = f"{base_name}_processed_{timestamp}.xlsx"
+                    file_path = os.path.join(export_dir, filename)
+                    
+                    # Créer un fichier Excel avec plusieurs feuilles
+                    with pd.ExcelWriter(file_path, engine='openpyxl') as writer:
+                        # Feuille principale avec les données traitées
+                        df_processed.to_excel(writer, sheet_name='Données traitées', index=False)
+                        
+                        # Feuille avec les statistiques de traitement
+                        if processor.outlier_stats:
+                            outlier_summary = []
+                            for col, stats in processor.outlier_stats.items():
+                                for method, result in stats.items():
+                                    outlier_summary.append({
+                                        'Colonne': col,
+                                        'Méthode': method,
+                                        'Outliers détectés': result['count'],
+                                        'Pourcentage': f"{result['percentage']:.2f}%"
+                                    })
+                            
+                            if outlier_summary:
+                                outlier_df = pd.DataFrame(outlier_summary)
+                                outlier_df.to_excel(writer, sheet_name='Statistiques outliers', index=False)
+                        
+                        # Feuille avec les informations de traitement
+                        processing_info = pd.DataFrame([
+                            {'Paramètre': 'Mode de traitement', 'Valeur': config.get('processing_mode', 'automatic')},
+                            {'Paramètre': 'Stratégie valeurs manquantes', 'Valeur': config.get('missing_strategy', 'mean')},
+                            {'Paramètre': 'Méthode normalisation', 'Valeur': config.get('normalization_method', 'standard')},
+                            {'Paramètre': 'Méthode encodage', 'Valeur': config.get('encoding_method', 'label')},
+                            {'Paramètre': 'Suppression doublons', 'Valeur': config.get('remove_duplicates', True)},
+                            {'Paramètre': 'Correction incohérences', 'Valeur': config.get('fix_inconsistencies', True)},
+                            {'Paramètre': 'Traitement des dates', 'Valeur': config.get('normalize_dates', True)},
+                            {'Paramètre': 'Lignes traitées', 'Valeur': len(df_processed)},
+                            {'Paramètre': 'Colonnes traitées', 'Valeur': len(df_processed.columns)},
+                            {'Paramètre': 'Date de traitement', 'Valeur': datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+                        ])
+                        processing_info.to_excel(writer, sheet_name='Informations traitement', index=False)
+                    
+                    media_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    
+                else:
+                    raise HTTPException(status_code=400, detail=f"Format non supporté: {format}")
+                
+                # Retourner le fichier
+                return FileResponse(
+                    path=file_path,
+                    filename=filename,
+                    media_type=media_type,
+                    headers={"Content-Disposition": f"attachment; filename={filename}"}
+                )
+                
+            except Exception as e:
+                logger.error(f"Erreur lors de l'export du fichier {file_id}: {e}")
+                raise HTTPException(status_code=500, detail=f"Erreur d'export: {str(e)}")
 
     @app.get("/files/{file_id}/export")
     def export_file(file_id: int, format: str = "csv"):
