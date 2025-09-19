@@ -17,6 +17,7 @@ class UploadedFile(Base):
     row_count: Mapped[int] = mapped_column(Integer)
     col_count: Mapped[int] = mapped_column(Integer)
     columns: Mapped[list] = mapped_column(JSON)
+    uploaded_by: Mapped[int] = mapped_column(Integer, nullable=True)  # ID de l'utilisateur
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
 
