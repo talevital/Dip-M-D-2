@@ -1,12 +1,3 @@
-# Solution d'authentification Django + Next.js - SIMPLE ET FONCTIONNELLE
-
-## 🎯 Approche simplifiée
-
-Au lieu de corriger tous les problèmes complexes, créons une solution d'authentification simple qui fonctionne immédiatement.
-
-## 🚀 Démarrage rapide
-
-### 1. Backend Django (Port 8000)
 
 ```bash
 cd back-end
