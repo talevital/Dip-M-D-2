@@ -38,6 +38,9 @@ from auth.models import User
 from auth.auth import verify_token
 from auth.database import get_db as get_auth_db
 
+# Import du module de recherche de pays
+from api.country_search import router as country_search_router
+
 # Import logging
 from loguru import logger
 
@@ -482,6 +485,9 @@ def create_app() -> FastAPI:
                 logger.error(f"Erreur lors de l'export du fichier {file_id}: {e}")
                 raise HTTPException(status_code=500, detail=f"Erreur d'export: {str(e)}")
 
+    # Inclure les routes de recherche de pays AVANT les routes avancées
+    app.include_router(country_search_router)
+    
     # Inclure les routes avancées existantes
     include_advanced_routes(app)
 

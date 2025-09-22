@@ -11,7 +11,6 @@ from typing import Dict, List, Any, Optional, Tuple
 import logging
 from datetime import datetime
 import json
-
 logger = logging.getLogger(__name__)
 
 class CountryScoringEngine:
@@ -353,7 +352,7 @@ def process_file_scoring(file_path: str, year: Optional[int] = None) -> Dict[str
     engine = CountryScoringEngine()
     return engine.process_country_scoring(file_path, year)
 
-
+@login_required
 def get_country_scores(file_path: str, country_code: str, year: Optional[int] = None) -> Dict[str, Any]:
     """
     Récupère les scores d'un pays spécifique
@@ -397,7 +396,6 @@ def get_country_scores(file_path: str, country_code: str, year: Optional[int] = 
             'success': False,
             'error': f'Données non disponibles pour {country_name}'
         }
-
 
 if __name__ == "__main__":
     # Test du module
