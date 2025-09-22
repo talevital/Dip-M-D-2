@@ -187,3 +187,4 @@ def create_chart_from_config(data: pd.DataFrame, config: Dict[str, Any]) -> Dict
 
 
 
+
